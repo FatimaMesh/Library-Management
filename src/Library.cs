@@ -27,7 +27,7 @@ namespace Library
         {
             foreach (var book in Books)
             {
-                Console.WriteLine($"{book.Title}");
+                Console.WriteLine($"{book.Title}, {book.Id}");
             }
         }
 
@@ -35,7 +35,7 @@ namespace Library
         {
             foreach (var user in Users)
             {
-                Console.WriteLine($"{user.Title}");
+                Console.WriteLine($"{user.Name}, {user.Id}");
             }
         }
     }
