@@ -1,17 +1,16 @@
-using System.Dynamic;
-
 namespace Library
 {
     class Library
     {
         public List<Book> Books { get; set; }
         public List<User> Users { get; set; }
-
+        public INotificationService notification;
         public int page = 1;
-        public int pageSize = 10;
+        public int pageLimit = 10;
 
-        public Library()
+        public Library(INotificationService notification)
         {
+            this.notification = notification;
             Books = new List<Book>();
             Users = new List<User>();
         }
@@ -20,10 +19,11 @@ namespace Library
         {
             if (Users.Any(currentUser => user.Id == currentUser.Id))
             {
-                Console.WriteLine($"{user.Name} already there");
+                notification.SendNotificationOnFailure(""+user.Name);
                 return;
             }
             Users.Add(user);
+            notification.SendNotificationOnSuccess(""+user.Name);
         }
 
         public void AddBook(Book book)
@@ -87,8 +87,8 @@ namespace Library
             }
             var sortBook = Books
                 .OrderBy(book => book.CreatedDate)
-                .Skip((page - 1) * pageSize)
-                .Take(pageSize)
+                .Skip((page - 1) * pageLimit)
+                .Take(pageLimit)
                 .ToList();
             foreach (var book in sortBook)
             {
@@ -105,8 +105,8 @@ namespace Library
             }
             var sortUser = Users
                 .OrderBy(user => user.CreatedDate)
-                .Skip((page - 1) * pageSize)
-                .Take(pageSize)
+                .Skip((page - 1) * pageLimit)
+                .Take(pageLimit)
                 .ToList();
 
             foreach (var user in sortUser)

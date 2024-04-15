@@ -36,7 +36,11 @@
             var book19 = new Book("The Iliad");
             var book20 = new Book("Anna Karenina");
 
-            var library = new Library();
+            // var emailService = new EmailNotificationService();
+            var smsService = new SMSNotificationService();
+             var library = new Library(smsService);
+            //  var libraryWithEmail = new Library(emailService);
+            //  var libraryWithSMS = new Library(smsService);
             library.AddBook(book1);
             library.AddBook(book2);
             library.AddBook(book3);
