@@ -22,7 +22,30 @@ namespace Library
         {
             Books.Add(book);
         }
+        
+        public Book? FindBookByTitle(string title)
+        {
+            var isFound = Books.Find(book =>
+                title.Equals(book.Title, StringComparison.OrdinalIgnoreCase)
+            );
+            return isFound;
+        }
 
+        public User? FindUsersByName(string name)
+        {
+            var isFound = Users.Find(user =>
+                name.Equals(user.Name, StringComparison.OrdinalIgnoreCase)
+            );
+            return isFound;
+        }        
+        public void DeleteUserById(string id){
+            var isFound = Users.Find(user => user.Id.ToString() == id);
+            Users.Remove(isFound!);
+        }
+        public void DeleteBookById(string id){
+            var isFound = Books.Find(book => book.Id.ToString() == id);
+            Books.Remove(isFound!);
+        } 
         public void GetBooks()
         {
             foreach (var book in Books)

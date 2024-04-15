@@ -39,8 +39,18 @@
             var library = new Library();
             library.AddBook(book1);
             library.AddUser(user1);
+            library.AddBook(book2);
+            library.AddUser(user2);
             library.GetBooks();
             library.GetUsers();
+            var data = library.FindBookByTitle("The Great Gatsby");
+            var data2 = library.FindUsersByName("Alice4");
+            Console.WriteLine($"Text1 {data}, text2 {data2}");
+            library.DeleteBookById(book1.Id.ToString());
+            library.DeleteUserById(user1.Id.ToString());
+            library.GetBooks();
+            library.GetUsers();
+            
         }
     }
 }
