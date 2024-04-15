@@ -39,6 +39,14 @@
             var library = new Library();
             library.AddBook(book1);
             library.AddBook(book2);
+            library.AddBook(book3);
+            library.AddBook(book4);
+            library.AddBook(book5);
+            library.AddBook(book6);
+            library.AddBook(book7);
+            library.AddBook(book8);
+            library.AddBook(book9);
+            library.AddBook(book10);
 
             library.AddUser(user1);
             library.AddUser(user2);
@@ -51,14 +59,25 @@
             library.AddUser(user9);
             library.AddUser(user10);
 
-            // library.GetBooks();
+            library.GetBooks();
+            Console.WriteLine($"======================");
             library.GetUsers();
-            var data = library.FindBookByTitle("The Great Gatsby");
-            var data2 = library.FindUsersByName("Alice4");
-            Console.WriteLine($"Text1 {data}, text2 {data2}");
+            Console.WriteLine($"======================");
+            var foundBook = library.FindBookByTitle("The Great Gatsby");
+            if (foundBook != null)
+            {
+                Console.WriteLine($"{foundBook.Title} Book is Found ");
+            }
+            var foundUser = library.FindUserByName("Alice");
+            foreach (var user in foundUser)
+            {
+                Console.WriteLine($"Name: {user.Name}, Date: {user.CreatedDate}");
+            }
             library.DeleteBookById(book1.Id.ToString());
             library.DeleteUserById(user1.Id.ToString());
+            // Console.WriteLine($"======================");
             // library.GetBooks();
+            // Console.WriteLine($"======================");
             // library.GetUsers();
         }
     }
