@@ -5,8 +5,6 @@ namespace Library
         public List<Book> Books { get; set; }
         public List<User> Users { get; set; }
         public INotificationService notification;
-        public int page = 1;
-        public int pageLimit = 5;
 
         public Library(INotificationService notification)
         {
@@ -20,12 +18,16 @@ namespace Library
             if (Users.Any(currentUser => user.Id == currentUser.Id))
             {
                 notification.SendNotificationOnFailure(
-                    "We encountered an issue on adding '" + user.Name + "', user already exists"
+                    Action.ADD,
+                    "'" + user.Name + "', user already exists"
                 );
                 return;
             }
             Users.Add(user);
-            notification.SendNotificationOnSuccess("user '" + user.Name + "' has been added");
+            notification.SendNotificationOnSuccess(
+                Action.ADD,
+                "user '" + user.Name + "' has been added"
+            );
         }
 
         public void AddBook(Book book)
@@ -33,24 +35,21 @@ namespace Library
             if (FindBookByTitle(book.Title!) != null)
             {
                 notification.SendNotificationOnFailure(
-                    "We encountered an issue on adding '" + book.Title + "', book already exists"
+                    Action.ADD,
+                    "'" + book.Title + "', book already exists"
                 );
                 return;
             }
             Books.Add(book);
-            notification.SendNotificationOnSuccess("book '" + book.Title + "' has been added");
+            notification.SendNotificationOnSuccess(
+                Action.ADD,
+                "book '" + book.Title + "' has been added"
+            );
         }
 
         public Book? FindBookByTitle(string title)
         {
-            Book? isFound = Books.FirstOrDefault(book =>
-                title.Equals(book.Title, StringComparison.OrdinalIgnoreCase)
-            );
-            if (isFound != null)
-            {
-                return isFound;
-            }
-            return null;
+            return Books.Find(book => title.Equals(book.Title, StringComparison.OrdinalIgnoreCase));
         }
 
         public List<User> FindUserByName(string name)
@@ -66,10 +65,13 @@ namespace Library
             if (isFound != null)
             {
                 Users.Remove(isFound);
-                Console.WriteLine($"User: {isFound.Name} deleted");
+                notification.SendNotificationOnSuccess(
+                    Action.DELETE,
+                    $"User: {isFound.Name} deleted"
+                );
                 return;
             }
-            Console.WriteLine($"User not Found");
+            notification.SendNotificationOnFailure(Action.DELETE, $"'User not Found to delete'");
         }
 
         public void DeleteBookById(string id)
@@ -78,14 +80,17 @@ namespace Library
             if (isFound != null)
             {
                 Books.Remove(isFound);
-                Console.WriteLine($"Book: {isFound.Title} deleted");
+                notification.SendNotificationOnSuccess(
+                    Action.DELETE,
+                    $"Book: {isFound.Title} deleted"
+                );
                 return;
             }
-            Console.WriteLine($"Book not Found");
+            notification.SendNotificationOnFailure(Action.DELETE, $"'Book not Found to delete'");
         }
 
         // Get all books/users with pagination, sorted by created date
-        public void GetBooks()
+        public void GetBooks(int page, int pageLimit)
         {
             if (IsEmptyList(Books))
             {
@@ -99,11 +104,11 @@ namespace Library
                 .ToList();
             foreach (var book in sortBook)
             {
-                Console.WriteLine($"Title: {book.Title}, Date: {book.CreatedDate}");
+                Console.WriteLine($"{book}");
             }
         }
 
-        public void GetUsers()
+        public void GetUsers(int page, int pageLimit)
         {
             if (IsEmptyList(Users))
             {
@@ -118,7 +123,7 @@ namespace Library
 
             foreach (var user in sortUser)
             {
-                Console.WriteLine($"Name: {user.Name}, Date: {user.CreatedDate}");
+                Console.WriteLine($"{user}");
             }
         }
 

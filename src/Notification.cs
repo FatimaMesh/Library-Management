@@ -1,38 +1,70 @@
+using System.Reflection.Metadata.Ecma335;
+
 namespace Library
 {
+    public enum Action
+    {
+        ADD,
+        DELETE
+    }
+
     interface INotificationService
     {
-        void SendNotificationOnSuccess(string message);
-        void SendNotificationOnFailure(string message);
+        void SendNotificationOnSuccess(Action action, string message);
+        void SendNotificationOnFailure(Action action, string message);
     }
 
     public struct EmailNotificationService : INotificationService
     {
-        public void SendNotificationOnSuccess(string message)
+        public void SendNotificationOnSuccess(Action action, string message)
         {
+            string messageContent = action switch
+            {
+                Action.ADD => $"Hello, a new {message} successfully to the Library",
+                Action.DELETE => $"Hello, {message} successfully from the Library",
+                _ => "Action not assign",
+            };
             Console.WriteLine(
-                $"Hello, a new {message} successfully to the Library. If you have any queries or feedback, please contact our support team at support@library.com."
+                $"{messageContent}. If you have any queries or feedback, please contact our support team at support@library.com"
             );
         }
 
-        public void SendNotificationOnFailure(string message)
+        public void SendNotificationOnFailure(Action action, string message)
         {
+            string messageContent = action switch
+            {
+                Action.ADD => "We encountered an issue on adding " + message,
+                Action.DELETE => "We encountered an issue on deleting " + message,
+                _ => "Action not assign",
+            };
             Console.WriteLine(
-                $"{message}. Please review the input data. For more help, visit our FAQ at library.com/faq."
+                $"{messageContent}. Please review the input data. For more help, visit our FAQ at library.com/faq."
             );
         }
     }
 
     public struct SMSNotificationService : INotificationService
     {
-        public void SendNotificationOnSuccess(string message)
+        public void SendNotificationOnSuccess(Action action, string message)
         {
-            Console.WriteLine($"{message}. Thank you!");
+            string messageContent = action switch
+            {
+                Action.ADD => $"{message}. Thank you!",
+                Action.DELETE => $"{message}. Thank you!",
+                _ => "Action not assign",
+            };
+            Console.WriteLine($"{messageContent}");
         }
 
-        public void SendNotificationOnFailure(string message)
+        public void SendNotificationOnFailure(Action action, string message)
         {
-            Console.WriteLine($"{message}. Please email support@library.com.");
+            string messageContent = action switch
+            {
+                Action.ADD => "Error adding " + message,
+                Action.DELETE => "Error deleting, " + message,
+                _ => "Action not assign",
+            };
+            Console.WriteLine($"{messageContent}. Please email support@library.");
         }
     }
 }

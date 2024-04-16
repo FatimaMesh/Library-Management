@@ -20,5 +20,10 @@ namespace Library
                 Console.WriteLine($"Error : {e.Message}");
             }
         }
+    
+        public override string ToString()
+        {
+            return $"Id: {this.Id}, Name: {this.Name}, Created Date: {this.CreatedDate.ToShortDateString()}";
+        }
     }
 }

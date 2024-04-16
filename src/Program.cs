@@ -81,31 +81,48 @@
             libraryWithEmail.AddUser(user10);
 
             Console.WriteLine($"==========Show library books============");
-            libraryWithSMS.GetBooks();
+            libraryWithSMS.GetBooks(1, 3);
             Console.WriteLine($"==========Show library Users============");
-            libraryWithSMS.GetUsers();
-            Console.WriteLine($"======================");
+            libraryWithSMS.GetUsers(2, 3);
+
+            Console.WriteLine($"==========Found Items============");
+            //find book
             var foundBook = libraryWithSMS.FindBookByTitle("The Great Gatsby");
             if (foundBook != null)
             {
-                Console.WriteLine($"{foundBook.Title} Book is Found ");
+                Console.WriteLine($"Book Found: {foundBook}");
             }
-            var foundUser = libraryWithSMS.FindUserByName("Alice");
-            foreach (var user in foundUser)
+            else
             {
-                Console.WriteLine($"User Found: {user.Id}, {user.Name}, {user.CreatedDate}");
+                Console.WriteLine($"No Book Found");
             }
-
+            //find user
+            var foundUser = libraryWithSMS.FindUserByName("Alice");
+            if (foundUser.Count > 0)
+            {
+                foreach (var user in foundUser)
+                {
+                    Console.WriteLine($"User Found: {user}");
+                }
+            }
+            else
+            {
+                Console.WriteLine($"No User Found");
+            }
+            
+            Console.WriteLine($"==========Delete Items============");
             libraryWithSMS.DeleteBookById(book1.Id.ToString());
+            libraryWithSMS.DeleteUserById(user1.Id.ToString());
             libraryWithSMS.DeleteUserById(user1.Id.ToString());
 
             libraryWithEmail.DeleteBookById(book13.Id.ToString());
             libraryWithEmail.DeleteUserById(user10.Id.ToString());
+            libraryWithEmail.DeleteUserById(user10.Id.ToString());
 
             Console.WriteLine($"==========Show library books============");
-            libraryWithEmail.GetBooks();
+            libraryWithEmail.GetBooks(1, 5);
             Console.WriteLine($"==========Show library Users============");
-            libraryWithEmail.GetUsers();
+            libraryWithEmail.GetUsers(1, 3);
         }
     }
 }
