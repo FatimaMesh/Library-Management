@@ -6,7 +6,7 @@ namespace Library
         public List<User> Users { get; set; }
         public INotificationService notification;
         public int page = 1;
-        public int pageLimit = 10;
+        public int pageLimit = 5;
 
         public Library(INotificationService notification)
         {
@@ -19,21 +19,26 @@ namespace Library
         {
             if (Users.Any(currentUser => user.Id == currentUser.Id))
             {
-                notification.SendNotificationOnFailure(""+user.Name);
+                notification.SendNotificationOnFailure(
+                    "We encountered an issue on adding '" + user.Name + "'"
+                );
                 return;
             }
             Users.Add(user);
-            notification.SendNotificationOnSuccess(""+user.Name);
+            notification.SendNotificationOnSuccess("user '" + user.Name + "' has been added");
         }
 
         public void AddBook(Book book)
         {
             if (FindBookByTitle(book.Title!) != null)
             {
-                Console.WriteLine($"{book.Title} Book already there");
+                notification.SendNotificationOnFailure(
+                    "We encountered an issue on adding '" + book.Title + "'"
+                );
                 return;
             }
             Books.Add(book);
+            notification.SendNotificationOnSuccess("book '" + book.Title + "' has been added");
         }
 
         public Book? FindBookByTitle(string title)
@@ -61,6 +66,7 @@ namespace Library
             if (isFound != null)
             {
                 Users.Remove(isFound);
+                Console.WriteLine($"User: {isFound.Name} deleted");
                 return;
             }
             Console.WriteLine($"User not Found");
@@ -72,6 +78,7 @@ namespace Library
             if (isFound != null)
             {
                 Books.Remove(isFound);
+                Console.WriteLine($"Book: {isFound.Title} deleted");
                 return;
             }
             Console.WriteLine($"Book not Found");

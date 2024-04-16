@@ -36,53 +36,71 @@
             var book19 = new Book("The Iliad");
             var book20 = new Book("Anna Karenina");
 
-            // var emailService = new EmailNotificationService();
+            var emailService = new EmailNotificationService();
             var smsService = new SMSNotificationService();
-             var library = new Library(smsService);
-            //  var libraryWithEmail = new Library(emailService);
-            //  var libraryWithSMS = new Library(smsService);
-            library.AddBook(book1);
-            library.AddBook(book2);
-            library.AddBook(book3);
-            library.AddBook(book4);
-            library.AddBook(book5);
-            library.AddBook(book6);
-            library.AddBook(book7);
-            library.AddBook(book8);
-            library.AddBook(book9);
-            library.AddBook(book10);
+            var libraryWithEmail = new Library(emailService);
+            var libraryWithSMS = new Library(smsService);
+            
+            Console.WriteLine($"==========Adding library items============");
+            libraryWithSMS.AddBook(book1);
+            libraryWithSMS.AddBook(book2);
+            libraryWithSMS.AddBook(book3);
+            libraryWithSMS.AddBook(book4);
+            libraryWithSMS.AddBook(book5);
+            libraryWithSMS.AddBook(book6);
+            libraryWithSMS.AddBook(book7);
+            libraryWithSMS.AddBook(book8);
+            libraryWithSMS.AddBook(book9);
+            libraryWithSMS.AddBook(book10);
 
-            library.AddUser(user1);
-            library.AddUser(user2);
-            library.AddUser(user3);
-            library.AddUser(user4);
-            library.AddUser(user5);
-            library.AddUser(user6);
-            library.AddUser(user7);
-            library.AddUser(user8);
-            library.AddUser(user9);
-            library.AddUser(user10);
+            libraryWithEmail.AddBook(book11);
+            libraryWithEmail.AddBook(book12);
+            libraryWithEmail.AddBook(book13);
+            libraryWithEmail.AddBook(book14);
+            libraryWithEmail.AddBook(book15);
+            libraryWithEmail.AddBook(book16);
+            libraryWithEmail.AddBook(book17);
+            libraryWithEmail.AddBook(book18);
+            libraryWithEmail.AddBook(book19);
+            libraryWithEmail.AddBook(book20);
 
-            library.GetBooks();
+            libraryWithSMS.AddUser(user1);
+            libraryWithSMS.AddUser(user2);
+            libraryWithSMS.AddUser(user3);
+            libraryWithSMS.AddUser(user4);
+            libraryWithSMS.AddUser(user5);
+            libraryWithSMS.AddUser(user6);
+            libraryWithSMS.AddUser(user7);
+            libraryWithSMS.AddUser(user8);
+            libraryWithSMS.AddUser(user9);
+            libraryWithSMS.AddUser(user10);
+
+            libraryWithEmail.AddUser(user1);
+            libraryWithEmail.AddUser(user5);
+            libraryWithEmail.AddUser(user10);
+
+            Console.WriteLine($"==========Show library books============");
+            libraryWithSMS.GetBooks();
+            Console.WriteLine($"==========Show library Users============");
+            libraryWithSMS.GetUsers();
             Console.WriteLine($"======================");
-            library.GetUsers();
-            Console.WriteLine($"======================");
-            var foundBook = library.FindBookByTitle("The Great Gatsby");
+            var foundBook = libraryWithSMS.FindBookByTitle("The Great Gatsby");
             if (foundBook != null)
             {
                 Console.WriteLine($"{foundBook.Title} Book is Found ");
             }
-            var foundUser = library.FindUserByName("Alice");
+            var foundUser = libraryWithSMS.FindUserByName("Alice");
             foreach (var user in foundUser)
             {
-                Console.WriteLine($"Name: {user.Name}, Date: {user.CreatedDate}");
+                Console.WriteLine($"User Found: {user.Id}, {user.Name}, {user.CreatedDate}");
             }
-            library.DeleteBookById(book1.Id.ToString());
-            library.DeleteUserById(user1.Id.ToString());
-            // Console.WriteLine($"======================");
-            // library.GetBooks();
-            // Console.WriteLine($"======================");
-            // library.GetUsers();
+            libraryWithSMS.DeleteBookById(book1.Id.ToString());
+            libraryWithSMS.DeleteUserById(user1.Id.ToString());
+
+            Console.WriteLine($"==========Show library books============");
+            libraryWithSMS.GetBooks();
+            Console.WriteLine($"==========Show library Users============");
+            libraryWithSMS.GetUsers();
         }
     }
 }
