@@ -1,6 +1,6 @@
 namespace Library
 {
-    class User : LibraryItem
+    class User : BaseEntity
     {
         public string? Name { get; set; }
 

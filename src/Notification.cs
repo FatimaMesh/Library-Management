@@ -2,8 +2,8 @@ namespace Library
 {
     interface INotificationService
     {
-        public void SendNotificationOnSuccess(string message);
-        public void SendNotificationOnFailure(string message);
+        void SendNotificationOnSuccess(string message);
+        void SendNotificationOnFailure(string message);
     }
 
     public struct EmailNotificationService : INotificationService

@@ -20,7 +20,7 @@ namespace Library
             if (Users.Any(currentUser => user.Id == currentUser.Id))
             {
                 notification.SendNotificationOnFailure(
-                    "We encountered an issue on adding '" + user.Name + "'"
+                    "We encountered an issue on adding '" + user.Name + "', user already exists"
                 );
                 return;
             }
@@ -33,7 +33,7 @@ namespace Library
             if (FindBookByTitle(book.Title!) != null)
             {
                 notification.SendNotificationOnFailure(
-                    "We encountered an issue on adding '" + book.Title + "'"
+                    "We encountered an issue on adding '" + book.Title + "', book already exists"
                 );
                 return;
             }

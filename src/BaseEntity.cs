@@ -1,11 +1,11 @@
 namespace Library
 {
-    class LibraryItem
+    class BaseEntity
     {
         public Guid Id { get; }
         public DateTime CreatedDate { get; set; }
 
-        public LibraryItem(DateTime? createdDate = null)
+        public BaseEntity(DateTime? createdDate = null)
         {
             Id = Guid.NewGuid();
             CreatedDate = createdDate ?? DateTime.Now;
