@@ -40,7 +40,7 @@
             var smsService = new SMSNotificationService();
             var libraryWithEmail = new Library(emailService);
             var libraryWithSMS = new Library(smsService);
-            
+
             Console.WriteLine($"==========Adding library items============");
             libraryWithSMS.AddBook(book1);
             libraryWithSMS.AddBook(book2);
@@ -77,6 +77,7 @@
 
             libraryWithEmail.AddUser(user1);
             libraryWithEmail.AddUser(user5);
+            libraryWithEmail.AddUser(user7);
             libraryWithEmail.AddUser(user10);
 
             Console.WriteLine($"==========Show library books============");
@@ -94,13 +95,17 @@
             {
                 Console.WriteLine($"User Found: {user.Id}, {user.Name}, {user.CreatedDate}");
             }
+
             libraryWithSMS.DeleteBookById(book1.Id.ToString());
             libraryWithSMS.DeleteUserById(user1.Id.ToString());
 
+            libraryWithEmail.DeleteBookById(book13.Id.ToString());
+            libraryWithEmail.DeleteUserById(user10.Id.ToString());
+
             Console.WriteLine($"==========Show library books============");
-            libraryWithSMS.GetBooks();
+            libraryWithEmail.GetBooks();
             Console.WriteLine($"==========Show library Users============");
-            libraryWithSMS.GetUsers();
+            libraryWithEmail.GetUsers();
         }
     }
 }
