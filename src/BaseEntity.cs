@@ -1,5 +1,4 @@
-namespace Library
-{
+namespace LibraryManagement;
     class BaseEntity
     {
         public Guid Id { get; }
@@ -11,4 +10,3 @@ namespace Library
             CreatedDate = createdDate ?? DateTime.Now;
         }
     }
-}

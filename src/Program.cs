@@ -1,5 +1,4 @@
-﻿namespace Library
-{
+﻿namespace LibraryManagement;
     internal class Program
     {
         private static void Main()
@@ -125,4 +124,3 @@
             libraryWithEmail.GetUsers(1, 3);
         }
     }
-}

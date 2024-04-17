@@ -1,5 +1,4 @@
-namespace Library
-{
+namespace LibraryManagement;
     class Library
     {
         public List<Book> Books { get; set; }
@@ -132,4 +131,3 @@ namespace Library
             return list.Count <= 0;
         }
     }
-}

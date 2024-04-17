@@ -1,5 +1,4 @@
-namespace Library
-{
+namespace LibraryManagement;
     class Book : BaseEntity
     {
         public string? Title { get; set; }
@@ -26,4 +25,3 @@ namespace Library
             return $"Id: {this.Id}, Title: {this.Title}, Created Date: {this.CreatedDate.ToShortDateString()}";
         }
     }
-}
